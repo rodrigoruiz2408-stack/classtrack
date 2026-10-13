@@ -28,7 +28,7 @@ st.sidebar.info("💡 Sistema conectado y listo para la presentación.")
 
 def generar_respuesta_segura(prompt_texto):
     try:
-        response = client.models.generate_content(model='gemini-3.8-flash', contents=prompt_texto)
+       response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt_texto)
         return response.text
     except Exception as e:
         if "503" in str(e) or "UNAVAILABLE" in str(e):

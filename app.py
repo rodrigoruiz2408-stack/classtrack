@@ -3,7 +3,37 @@ import random
 from google import genai
 
 # Configuración de la página
-st.set_page_config(page_title="ClassTrack - Asistente Académico & PIE", layout="wide")
+st.set_page_config(
+    page_title="ClassTrack",
+    page_icon="📚",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Estilos CSS profesionales
+st.markdown("""
+    <style>
+    .main { background-color: #f8fafc; }
+    .stButton>button {
+        width: 100%;
+        border-radius: 8px;
+        font-weight: 600;
+        background-color: #2563eb;
+        color: white;
+        padding: 0.5rem 1rem;
+    }
+    .stButton>button:hover {
+        background-color: #1d4ed8;
+    }
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # Inicialización segura del cliente utilizando st.secrets
 try:
@@ -11,198 +41,235 @@ try:
 except Exception as e:
     client = None
 
-def motor_masivo_avanzado(modulo, entrada):
-    """Motor autónomo ampliado con alta variabilidad, razonamiento pedagógico profundo y enfoque PIE."""
-    entrada_lower = entrada.lower()
+def motor_masivo_extremo(modulo, entrada, nivel_curso=""):
+    """Motor algorítmico masivo de alta capacidad con múltiples bases de conocimiento especializadas."""
+    e_low = entrada.lower()
     
-    # 1. Detección automática del área de estudio
-    if any(k in entrada_lower for k in ["algebra", "matematica", "ecuacion", "numeros", "calculo", "geometria", "aritmetica", "funciones"]):
-        area = "Matemáticas y Razonamiento Lógico"
-        enfoque = "abstracción formal, modelamiento cuantitativo y rigor analítico"
-        quizzes = [
-            ("Dada la función $f(x) = 2x + 3$, ¿cuál es el valor de $f(4)$?", ["A) 5", "B) 11 *(Correcta)*", "C) 8", "D) 14"]),
-            ("Al despejar la incógnita en la ecuación lineal $3x - 6 = 12$, el valor de $x$ es:", ["A) 2", "B) 4", "C) 6 *(Correcta)*", "D) 8"]),
-            ("¿Cuál es la representación gráfica principal de una función cuadrática de la forma $ax^2 + bx + c$?", ["A) Una línea recta", "B) Una parábola *(Correcta)*", "C) Una circunferencia", "D) Una hipérbola"]),
-            ("¿Qué representa la pendiente 'm' en la ecuación de la recta $y = mx + b$?", ["A) La inclinación y tasa de cambio de la variable", "B) El punto de corte con el eje vertical", "C) Una constante nula", "D) El valor absoluto del radio"]),
-            ("Si resolvemos el sistema de ecuaciones con dos incógnitas, ¿qué significa hallar la solución?", ["A) Encontrar el punto de intersección de ambas rectas", "B) Multiplicar los coeficientes al azar", "C) Anular las variables", "D) Calcular el área bajo la curva"]),
-            ("¿Cuál es el resultado de simplificar la expresión algebraica $(x^2 - 9) / (x - 3)$ para $x \\neq 3$?", ["A) $x + 3$ *(Correcta)*", "B) $x - 3$", "C) $9$", "D) $x^2$"]),
-            ("En una progresión aritmética, ¿cómo se define la diferencia común?", ["A) Restando un término menos su antecedente inmediato *(Correcta)*", "B) Multiplicando todos los factores", "C) Dividiendo el límite superior", "D) Elevando al cuadrado"])
+    # --- MÓDULO PIE / INCLUSIÓN (Independiente) ---
+    if modulo == "Módulo PIE / Inclusión":
+        banco_pie = [
+            ("Adecuación Curricular Grado 1 (Acceso)", "Implementación de soportes visuales directos, pictogramas y glosario de términos clave previo al abordaje de la unidad."),
+            ("Adecuación Curricular Grado 2 (Proceso)", "Fraccionamiento de instrucciones complejas en secuencias de 3 pasos cortos, uso de organizadores gráficos y tiempo extendido en un 30%."),
+            ("Adecuación Curricular Grado 3 (Evaluación)", "Evaluación diversificada (DUA) permitiendo demostración oral, esquemática o mediante proyectos prácticos supervisados en lugar de pruebas escritas masivas."),
+            ("Apoyo Multisensorial Específico", "Uso de material manipulable, regletas lógicas y diseño de estaciones de aprendizaje con bajo estímulo distractores.")
         ]
-    elif any(k in entrada_lower for k in ["libro", "novela", "cuento", "literatura", "cortazar", "texto", "poesia", "autor", "narrativa"]):
+        estrategia, desc = random.choice(banco_pie)
+        return f"""### 🤝 Módulo Especializado PIE (Integración Escolar)
+**Foco de Adecuación:** `{entrada}` | **Nivel:** `{nivel_curso}`
+
+---
+
+#### 📋 Plan de Diversificación y Apoyo (DUA)
+* **Estrategia Seleccionada:** `{estrategia}`
+* **Descripción Operativa:** {desc}
+* **Mediación Docente Sugerida:**
+  1. *Anticipación y Anclaje:* Conectar el contenido nuevo con experiencias concretas del estudiante.
+  2. *Acompañamiento Gradual:* Reducir la carga cognitiva inicial mediante andamiaje directo los primeros minutos.
+  3. *Validación Formativa:* Evaluar progreso mediante hitos parciales y refuerzo positivo constante.
+"""
+
+    # --- BANCOS DE CONOCIMIENTO TÉCNICO MASIVO PARA OTROS MÓDULOS ---
+    if any(k in e_low for k in ["limite", "derivada", "calculo", "integral", "limites", "infinitesimal"]):
+        area = "Cálculo Infinitesimal y Análisis Real"
+        enfoque = "rigor analítico, tasas de cambio instantáneo y modelamiento de funciones"
+        banco_quizzes = [
+            ("¿Cuál es el valor del límite $\\lim_{x \\to 2} (3x^2 - 5)$?", ["A) 7 *(Correcta)*", "B) 6", "C) 11", "D) 1"]),
+            ("¿Cuál es la derivada de la función polinómica $f(x) = 4x^3 - 2x + 5$?", ["A) $12x^2 - 2$ *(Correcta)*", "B) $12x^3 - 2$", "C) $4x^2 - 2$", "D) $12x - 2$"]),
+            ("¿Qué representa geométricamente la derivada de una función en un punto dado?", ["A) El área bajo la curva", "B) La pendiente de la recta tangente a la curva en ese punto *(Correcta)*", "C) La intersección con el eje vertical", "D) El límite superior del dominio"]),
+            ("Al evaluar el límite $\\lim_{x \\to 0} \\frac{\\sin(x)}{x}$, ¿qué valor notable se obtiene?", ["A) 0", "B) 1 *(Correcta)*", "C) Infinito", "D) No existe"]),
+            ("¿Cuál es la regla de derivación aplicable al producto de dos funciones derivables $f(x) \\cdot g(x)$?", ["A) $f'(x) \\cdot g'(x)$", "B) $f'(x)g(x) + f(x)g'(x)$ *(Correcta)*", "C) $\\frac{f'(x)}{g'(x)}$", "D) $f(x)g(x) - f'(x)g'(x)$"])
+        ]
+    elif any(k in e_low for k in ["algebra", "matematica", "ecuacion", "numeros", "geometria", "funciones", "polinomio"]):
+        area = "Álgebra y Razonamiento Lógico-Matemático"
+        enfoque = "abstracción formal, modelamiento cuantitativo y resolución de sistemas"
+        banco_quizzes = [
+            ("Dada la función lineal $f(x) = 2x + 3$, ¿cuál es el valor de $f(4)$?", ["A) 5", "B) 11 *(Correcta)*", "C) 8", "D) 14"]),
+            ("Al despejar la incógnita en la ecuación lineal $3x - 6 = 12$, el valor de $x$ es:", ["A) 2", "B) 4", "C) 6 *(Correcta)*", "D) 8"]),
+            ("¿Cuál es la representación gráfica principal de una función cuadrática $ax^2 + bx + c$?", ["A) Una línea recta", "B) Una parábola *(Correcta)*", "C) Una circunferencia", "D) Una hipérbola"]),
+            ("¿Qué representa la pendiente 'm' en la ecuación de la recta $y = mx + b$?", ["A) La tasa de cambio y la inclinación de la recta *(Correcta)*", "B) El punto de corte con el eje vertical", "C) Una constante nula", "D) El radio de curvatura"]),
+            ("Al resolver un sistema de ecuaciones lineales de 2x2, ¿qué indica una solución única?", ["A) Que las rectas son paralelas", "B) Que las rectas se intersecan en un único punto exacto *(Correcta)*", "C) Que las rectas son coincidentes", "D) Que no hay variables"])
+        ]
+    elif any(k in e_low for k in ["quimica", "estequiometria", "mole", "acido", "reaccion", "atomos", "enlace"]):
+        area = "Química y Estequiometría Avanzada"
+        enfoque = "análisis cuantitativo de reacciones, balance atómico y comportamiento molar"
+        banco_quizzes = [
+            ("¿Cuántos gramos equivalen teóricamente a 1 mol de átomos de Carbono-12?", ["A) 6.022 × 10²³ gramos", "B) 12 gramos *(Correcta)*", "C) 22.4 gramos", "D) 1 gramo"]),
+            ("¿Qué indica el coeficiente estequiométrico en una reacción química balanceada?", ["A) La proporción en moles de las sustancias participantes *(Correcta)*", "B) La temperatura exacta de fusión", "C) El color de la solución resultante", "D) La velocidad en segundos"])
+        ]
+    elif any(k in e_low for k in ["libro", "novela", "cuento", "literatura", "cortazar", "texto", "poesia", "narrativa"]):
         area = "Literatura y Hermenéutica Crítica"
         enfoque = "deconstrucción de textos, análisis de tiempos narrativos y contexto estético"
-        quizzes = [
-            ("¿Qué técnica narrativa caracteriza frecuentemente las obras de Julio Cortázar en cuanto al tiempo?", ["A) Linealidad estricta", "B) Ruptura temporal, saltos y exploración de la conciencia *(Correcta)*", "C) Ausencia de descripciones", "D) Estilo periodístico"]),
-            ("En el análisis hermenéutico de un texto literario, ¿qué busca primordialmente el lector crítico?", ["A) Memorizar la fecha", "B) Interpretar las intenciones estéticas y subtextos del autor *(Correcta)*", "C) Contar páginas", "D) Ignorar el contexto"]),
-            ("¿Qué elemento define principalmente a una novela frente a un cuento corto?", ["A) La complejidad de su trama, subtramas y desarrollo profundo de personajes *(Correcta)*", "B) La obligatoriedad de rima", "C) Uso exclusivo de diálogos", "D) Extensión menor a dos páginas"]),
-            ("¿A qué se refiere el concepto de 'narrador omnisciente'?", ["A) Un personaje que cuenta su propia historia en primera persona", "B) Una voz que lo conoce todo, incluidos los pensamientos íntimos de los personajes *(Correcta)*", "C) Un observador externo neutral sin información", "D) Un diálogo coral entre varios actores"]),
-            ("¿Cuál es la función principal de las figuras retóricas en la poesía?", ["A) Confundir al lector deliberadamente", "B) Embellecer el lenguaje y evocar múltiples capas de significado y emoción *(Correcta)*", "C) Aportar rigor matemático al texto", "D) Describir fichas técnicas"])
-        ]
-    elif any(k in entrada_lower for k in ["ciencia", "fisica", "quimica", "biologia", "celula", "ecosistema", "atomos", "energia"]):
-        area = "Ciencias Naturales y Experimentación"
-        enfoque = "observación empírica, formulación de hipótesis y validación de variables"
-        quizzes = [
-            ("¿Cuál es la unidad fundamental estructural y funcional de los seres vivos?", ["A) El átomo", "B) La célula *(Correcta)*", "C) La molécula de agua", "D) El tejido adiposo"]),
-            ("En el método científico, ¿qué paso sigue inmediatamente después de formular una hipótesis?", ["A) La experimentación y recolección de datos *(Correcta)*", "B) La publicación del libro", "C) Concluir sin pruebas", "D) Descartar la observación"]),
-            ("¿Qué ley física explica la conservación de la energía en un sistema aislado?", ["A) Primera Ley de la Termodinámica *(Correcta)*", "B) Ley de la gravedad", "C) Principio de Arquímedes", "D) Ley de Ohm"]),
-            ("¿Cuál es la función principal de los cloroplastos en las células vegetales?", ["A) Realizar la respiración celular", "B) Llevar a cabo la fotosíntesis capturando energía lumínica *(Correcta)*", "C) Almacenar material genético principal", "D) Sintetizar lípidos complejos"])
+        banco_quizzes = [
+            ("¿Qué técnica narrativa caracteriza las obras de Julio Cortázar en cuanto al tiempo?", ["A) Linealidad estricta", "B) Ruptura temporal, saltos y exploración de la conciencia *(Correcta)*", "C) Ausencia de descripciones", "D) Estilo periodístico"]),
+            ("En el análisis crítico de un texto literario, ¿qué busca primordialmente el hermeneuta?", ["A) Memorizar la fecha de edición", "B) Interpretar las intenciones estéticas, simbolismos y subtextos del autor *(Correcta)*", "C) Contar el número exacto de párrafos", "D) Ignorar el contexto histórico"])
         ]
     else:
         area = "Desarrollo Curricular Multidisciplinario"
-        enfoque = f"transferencia de saberes, resolución de problemas y análisis de {entrada}"
-        quizzes = [
-            (f"¿Cuál es el objetivo principal al abordar la temática de {entrada}?", ["A) Aislar componentes", "B) Comprender su impacto sistémico y aplicación práctica *(Correcta)*", "C) Memorizar datos", "D) Descartar análisis"]),
-            (f"¿Qué metodología resulta más efectiva para trabajar {entrada}?", ["A) Clases pasivas", "B) Aprendizaje basado en resolución de desafíos prácticos *(Correcta)*", "C) Lectura monótona", "D) Exclusión de práctica"]),
-            (f"¿Cómo se valida el dominio sobre {entrada}?", ["A) Mediante evaluación formativa y transferencia a escenarios reales *(Correcta)*", "B) Repitiendo conceptos", "C) Evitando evaluación", "D) Copiando respuestas"])
+        enfoque = f"transferencia de saberes, resolución de problemas sistémicos y análisis de {entrada}"
+        banco_quizzes = [
+            (f"¿Cuál es el objetivo principal al abordar la temática de {entrada}?", ["A) Aislar los componentes teóricos", "B) Comprender su impacto sistémico y aplicación práctica *(Correcta)*", "C) Memorizar datos sin contexto", "D) Descartar el análisis"]),
+            (f"¿Qué metodología resulta más efectiva para trabajar {entrada}?", ["A) Clases pasivas unidireccionales", "B) Aprendizaje basado en resolución de desafíos prácticos y colaboración *(Correcta)*", "C) Lectura monótona sin pausa", "D) Exclusión total de la práctica"])
         ]
 
-    # 2. Bancos masivos de variabilidad y razonamiento PIE
-    verbos = ["Analizar profundamente", "Deconstruir de forma crítica", "Sistematizar los principios de", "Modelar escenarios sobre", "Evaluar el impacto de"]
+    # Generación de variables combinatorias profundas
+    verbos = ["Analizar profundamente", "Deconstructivamente examinar", "Sistematizar los principios de", "Modelar escenarios sobre", "Evaluar cuantitativa y cualitativamente"]
     metodologias = ["Aprendizaje Basado en Retos (ABR)", "Aula Invertida (Flipped Classroom)", "Enseñanza por Indagación", "Socioconstructivismo Aplicado"]
-    estrategias_pie = [
-        "Apoyos visuales estructurados (pictogramas y organizadores gráficos) para estudiantes con necesidades de procesamiento visual.",
-        "Fraccionamiento de consignas complejas en pasos secuenciales cortos para potenciar la memoria de trabajo.",
-        "Uso de material concreto y andamiaje físico/digital adaptado para estudiantes con diversidad funcional.",
-        "Flexibilización temporal y validación de respuestas a través de medios orales o multimodales (Diseño Universal de Aprendizaje - DUA)."
-    ]
-
     v = random.choice(verbos)
     m = random.choice(metodologias)
-    pie = random.choice(estrategias_pie)
 
     if modulo == "Planificador de Clases":
-        return f"""### 📝 Planificación Académica Inclusiva (ClassTrack AI & PIE)
-**Categoría Detectada:** `{area}`
-**Objeto de Estudio:** `{entrada}`
+        return f"""### 📝 Planificación Académica Avanzada ({area})
+**Tema Principal:** `{entrada}` | **Nivel:** `{nivel_curso}`
 
 ---
 
-#### 🎯 Ejes Orientadores y Diversificación
-* **Propósito Central:** {v} `{entrada}` integrando los principios del área de {area}.
-* **Metodología Base:** {m}, orientada a la participación universal.
-* **Adecuación Curricular PIE / NEE:** 
-  - *Estrategia de Apoyo:* {pie}
-  - *Criterio de Evaluación Diferenciada:* Foco en el progreso cualitativo y la aplicación funcional del concepto por sobre la memorización estricta.
+#### 🎯 Ejes Orientadores
+* **Propósito Central:** {v} `{entrada}` aplicando los fundamentos de {area}.
+* **Metodología Base:** {m}, orientada al desarrollo de {enfoque}.
 
 ---
 
-#### ⏱️ Secuencia Didáctica Estructurada (7 Momentos Clave)
-1. **Activación Multisensorial (10 min):** Presentación del tema mediante activadores visuales y preguntas detonantes ancladas a experiencias cotidianas.
-2. **Modelaje Docente Explicativo (15 min):** Demostración guiada paso a paso, asegurando verificación de comprensión en tiempo real.
-3. **Trabajo Colaborativo en Células (20 min):** Resolución de desafíos en equipos heterogéneos con roles asignados.
-4. **Adecuación y Andamiaje PIE (15 min):** Espacio de mediación focalizada y apoyo diversificado para estudiantes que requieran refuerzo en la consigna.
-5. **Puesta en Común y Plenario (10 min):** Socialización de soluciones y contraste de hipótesis grupales.
-6. **Consolidación Conceptual (10 min):** Síntesis esquemática a cargo del docente destacando las ideas fuerza.
-7. **Cierre Metacognitivo (10 min):** Ticket de salida flexible (escrito, oral o gráfico) para autoevaluar el proceso de aprendizaje.
+#### ⏱️ Secuencia Didáctica Estructurada en 3 Fases
+1. **Fase de Activación y Saberes Previos (15 min):** Planteamiento de un dilema detonante, pregunta problematizadora o ejercicio práctico vinculado directamente a `{entrada}`.
+2. **Fase de Desarrollo, Mediación y Práctica (30 min):** 
+   - Exposición conceptual breve y estructurada.
+   - Resolución guiada de ejemplos y ejercicios de alta complejidad en la pizarra.
+   - Trabajo colaborativo en células con asignación de roles operativos.
+3. **Fase de Cierre y Metacognición (15 min):** 
+   - Ticket de salida con resolución relámpago de un ejercicio clave.
+   - Plenario de conclusiones y retroalimentación formativa global.
 """
 
     elif modulo == "Creación de Actividades":
-        return f"""### 🛠️ Creador de Actividades Accesibles y Experienciales ({area})
+        return f"""### 🛠️ Creador de Experiencias Prácticas ({area})
 **Reto Asignado:** `{entrada}`
 
-* **Enfoque Metodológico:** Basado en **{m}** con adecuación universal DUA.
-* **Estrategia PIE para Diversidad Funcional:** {pie}
-
-* **Paso a Paso Operativo para el Estudiante:**
-  1. *Fase de Contextualización (10 min):* Explorar los conceptos clave de `{entrada}` apoyándose en organizadores gráficos.
-  2. *Fase de Desarrollo Práctico (25 min):* Ejecutar la tarea resolviendo los nodos críticos con apoyo de plantillas de guía estructurada.
-  3. *Fase de Contrastación (15 min):* Revisar los resultados utilizando pautas de autocorrección paso a paso.
-  4. *Fase de Comunicación Multimodal (10 min):* Presentar las conclusiones mediante soportes flexibles (oral, escrito o esquemático).
-
-* **Criterio de Éxito Inclusivo:** Valoración del esfuerzo procedimental, razonamiento lógico y creatividad en la solución por sobre el formato estricto de entrega.
+* **Dinámica Metodológica:** Basada en **{m}**.
+* **Estructura Paso a Paso para el Estudiante:**
+  1. *Fase de Diagnóstico y Análisis (10 min):* Revisar las premisas teóricas o datos iniciales de `{entrada}`.
+  2. *Fase de Ejecución y Modelamiento (25 min):* Aplicar fórmulas, procedimientos analíticos o esquemas propios de {enfoque}.
+  3. *Fase de Comprobación Cruzada (10 min):* Confrontar los resultados obtenidos frente al modelo esperado.
+  4. *Fase de Plenario y Defensa (5 min):* Socializar las conclusiones ante el grupo curso mediante argumentos sólidos.
+* **Criterio de Éxito:** Rigurosidad metodológica, precisión en los procedimientos y claridad expositiva.
 """
 
     elif modulo == "Generador de Rúbricas":
-        return f"""### 📊 Rúbrica Analítica de Evaluación Inclusiva ({area})
-**Instrumento Adaptado para:** `{entrada}`
+        return f"""### 📊 Rúbrica Analítica de Evaluación ({area})
+**Instrumento Generado para:** `{entrada}`
 
-| Criterio Evaluativo | Nivel Avanzado (4 pts) | Nivel Competente (3 pts) | En Desarrollo / Con Apoyo (2 pts) | Inicial (1 pt) |
+| Criterio Evaluativo | Nivel Avanzado (4 pts) | Nivel Competente (3 pts) | En Desarrollo (2 pts) | Inicial (1 pt) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Dominio Conceptual y Comprensión** | Domina con precisión los conceptos clave de `{entrada}` y los explica con claridad. | Explica correctamente los fundamentos teóricos con menores omisiones. | Comprende los conceptos centrales con apoyo de andamiaje o adaptaciones visuales. | Muestra dificultades severas incluso con apoyos especializados. |
-| **Aplicación y Resolución Práctica** | Resuelve la tarea aplicando {enfoque} con autonomía y rigor metodológico. | Aplica los procedimientos esperados de forma estándar y correcta. | Resuelve la tarea utilizando plantillas de apoyo, guías paso a paso o mediación docente. | No logra desarrollar la aplicación práctica solicitada. |
-| **Razonamiento y Participación PIE** | Contribuye activamente al trabajo colaborativo, aportando soluciones creativas. | Participa cumpliendo responsablemente con su rol asignado en el equipo. | Participa activamente en las dinámicas adaptadas según su plan de apoyo individual. | No participa de manera efectiva en las actividades del grupo. |
+| **Dominio Conceptual / Técnico** | Domina con precisión absoluta los fundamentos y fórmulas de `{entrada}`. | Explica y aplica correctamente los conceptos clave con menores omisiones. | Comprende parcialmente; comete errores operativos frecuentes. | Muestra vacilaciones severas y carencia de dominio básico. |
+| **Resolución Práctica o Analítica** | Resuelve los ejercicios aplicando {enfoque} con rigor y exactitud. | Aplica los procedimientos metodológicos esperados de forma estándar. | La resolución contiene errores notables en el desarrollo o cálculo. | No logra desarrollar la tarea solicitada o está incompleta. |
+| **Pensamiento Crítico y Rigor** | Justifica cada paso del proceso con argumentos sólidos y consistentes. | Justifica adecuadamente sus elecciones metodológicas. | Argumentación superficial o carente de sustento técnico claro. | Ausencia de análisis o justificación lógica. |
 """
 
     else:
-        # Seleccionar aleatoriamente 3 o 4 preguntas del banco correspondiente
-        sample_q = random.sample(quizzes, min(4, len(quizzes)))
-        
+        sample_q = random.sample(banco_quizzes, min(3, len(banco_quizzes)))
         preguntas_format = ""
         clase_resp = []
         for idx, (q, opts) in enumerate(sample_q, 1):
             preguntas_format += f"{idx}. {q}\n   * {opts[0]}\n   * {opts[1]}\n   * {opts[2]}\n   * {opts[3]}\n\n"
-            # Extraer la letra de la respuesta correcta de la cadena "(Correcta)"
-            correcta_letra = "B"
+            correcta_letra = "A"
             for opt in opts:
                 if "*(Correcta)*" in opt:
                     correcta_letra = opt[0]
             clase_resp.append(f"{idx}. {correcta_letra}")
 
-        return f"""### ❓ Banco de Evaluación Formativa Inclusiva y Quiz Adaptado ({area})
-**Tema de Evaluación:** `{entrada}`
-* **Nota PIE:** Este instrumento incluye opciones con lectura clara y adaptaciones de formato para facilitar el acceso cognitivo.
+        return f"""### ❓ Banco de Evaluación Formativa y Quiz Técnico ({area})
+**Tema Evaluado:** `{entrada}`
 
 {preguntas_format}
 ---
-* **Clave de Validación Docente / PIE:** {" | ".join(clase_resp)}
+* **Clave de Validación Docente:** {" | ".join(clase_resp)}
 """
 
-def generar_respuesta_segura(modulo, prompt_texto):
-    if client:
+def generar_respuesta_segura(modulo, prompt_texto, nivel=""):
+    if client and modulo != "Módulo PIE / Inclusión":
         try:
             response = client.models.generate_content(model='gemini-3.8-flash', contents=prompt_texto)
             if response and response.text:
                 return response.text
         except Exception:
             pass
-    return motor_masivo_avanzado(modulo, prompt_texto)
+    return motor_masivo_extremo(modulo, prompt_texto, nivel)
 
-# Interfaz Principal
-st.title("📚 ClassTrack AI & PIE")
-st.markdown("Tu asistente pedagógico inteligente especializado en gestión curricular, diversificación y apoyo a la integración escolar.")
-
-# Menú lateral para seleccionar el módulo
-modulo = st.sidebar.selectbox(
-    "Selecciona un módulo",
-    ["Planificador de Clases", "Creación de Actividades", "Generador de Rúbricas", "Quizzes Interactivos"]
-)
-
+# --- INTERFAZ DE USUARIO PRINCIPAL ---
+st.title("📚 ClassTrack")
+st.markdown("Plataforma pedagógica inteligente para la gestión curricular, cálculo, materias y soporte inclusivo.")
 st.markdown("---")
 
-if modulo == "Planificador de Clases":
-    st.subheader("📝 Planificador de Clases Inclusivo (Enfoque PIE)")
-    tema = st.text_input("Tema o contenido (Ej: Álgebra, Cortázar, Fotosíntesis, Ecosistemas):")
-    nivel = st.selectbox("Nivel / Curso:", ["Enseñanza Básica", "Enseñanza Media", "Educación Superior"])
+# Menú lateral organizado
+st.sidebar.markdown("### 🎛️ Panel de Navegación")
+modulo = st.sidebar.radio(
+    "Selecciona una herramienta:",
+    ["Planificador de Clases", "Creación de Actividades", "Generador de Rúbricas", "Quizzes Interactivos", "Módulo PIE / Inclusión"]
+)
+
+st.sidebar.markdown("---")
+st.sidebar.info("💡 **Estado del Sistema:** Motor autónomo extendido y optimizado para presentaciones en vivo.")
+
+# Renderizado modular independiente
+if modulo == "Módulo PIE / Inclusión":
+    st.subheader("🤝 Módulo Especializado PIE (Integración Escolar)")
+    st.markdown("Herramienta independiente dentro de la plataforma para diseñar adecuaciones curriculares y estrategias orientadas a la diversidad funcional.")
     
-    if st.button("Generar Planificación Inclusiva") and tema:
-        prompt_completo = f"Planificación de clase inclusiva sobre {tema} para nivel {nivel} con enfoque PIE"
-        with st.spinner("Generando planificación académica avanzada..."):
-            resultado = generar_respuesta_segura(modulo, prompt_completo)
+    col1, col2 = st.columns(2)
+    with col1:
+        tema_pie = st.text_input("Tema o dificultad a adaptar (Ej: Discalculia en ecuaciones, Comprensión lectora):")
+    with col2:
+        nivel_pie = st.selectbox("Nivel Educativo:", ["Enseñanza Básica", "Enseñanza Media", "Educación Superior"])
+    
+    if st.button("Generar Adaptación Curricular PIE") and tema_pie:
+        with st.spinner("Construyendo adecuación inclusiva..."):
+            resultado = generar_respuesta_segura(modulo, tema_pie, nivel_pie)
+            st.markdown(resultado)
+
+elif modulo == "Planificador de Clases":
+    st.subheader("📝 Planificador Académico Inteligente")
+    st.markdown("Estructura clases dinámicas basadas en objetivos, secuencias y criterios de éxito.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        tema = st.text_input("Tema o contenido (Ej: Límites y derivadas, Álgebra, Estequiometría):")
+    with col2:
+        nivel = st.selectbox("Nivel / Curso:", ["Enseñanza Básica", "Enseñanza Media", "Educación Superior"])
+    
+    if st.button("Generar Planificación Completa") and tema:
+        prompt_completo = f"Planificación de clase sobre {tema} para nivel {nivel}"
+        with st.spinner("Generando planificación avanzada..."):
+            resultado = generar_respuesta_segura(modulo, prompt_completo, nivel)
             st.markdown(resultado)
 
 elif modulo == "Creación de Actividades":
-    st.subheader("🛠️ Creador de Actividades Accesibles y DUA")
-    objetivo = st.text_input("¿Qué objetivo o contenido deseas trabajar?")
+    st.subheader("🛠️ Creador de Experiencias Prácticas")
+    st.markdown("Diseña retos y dinámicas de transferencia activa para los estudiantes.")
     
-    if st.button("Crear Actividad Inclusiva") and objetivo:
-        with st.spinner("Diseñando actividad con adaptaciones..."):
+    objetivo = st.text_input("¿Qué objetivo o contenido deseas trabajar en la actividad?")
+    
+    if st.button("Diseñar Actividad Experiencial") and objetivo:
+        with st.spinner("Construyendo consignas y pasos..."):
             resultado = generar_respuesta_segura(modulo, objetivo)
             st.markdown(resultado)
 
 elif modulo == "Generador de Rúbricas":
-    st.subheader("📊 Generador de Rúbricas de Evaluación Diferenciada")
-    criterio = st.text_input("¿Qué se va a evaluar? (Ej: Ecuaciones, Análisis literario, Maqueta):")
+    st.subheader("📊 Generador de Rúbricas Analíticas")
+    st.markdown("Crea instrumentos de evaluación estructurados por niveles de logro y competencias.")
     
-    if st.button("Generar Rúbrica PIE") and criterio:
-        with st.spinner("Construyendo rúbrica analítica inclusiva..."):
+    criterio = st.text_input("¿Qué se va a evaluar? (Ej: Límites y derivadas, Ensayo crítico, Maqueta):")
+    
+    if st.button("Generar Rúbrica de Evaluación") and criterio:
+        with st.spinner("Construyendo matriz analítica..."):
             resultado = generar_respuesta_segura(modulo, criterio)
             st.markdown(resultado)
 
 elif modulo == "Quizzes Interactivos":
-    st.subheader("❓ Generador de Quizzes Adaptados")
-    materia = st.text_input("Materia o tema para el quiz:")
+    st.subheader("❓ Generador de Quizzes Técnicos")
+    st.markdown("Genera bancos de evaluación con preguntas de selección múltiple, alternativas y clave de respuestas.")
     
-    if st.button("Crear Quiz Accesible") and materia:
-        with st.spinner("Elaborando banco de evaluación formativa..."):
+    materia = st.text_input("Materia o tema para el quiz (Ej: Límites y derivadas, Estequiometría, Álgebra):")
+    
+    if st.button("Generar Banco de Preguntas") and materia:
+        with st.spinner("Elaborando quiz técnico..."):
             resultado = generar_respuesta_segura(modulo, materia)
             st.markdown(resultado)

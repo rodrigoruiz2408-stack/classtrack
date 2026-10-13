@@ -12,33 +12,40 @@ except Exception as e:
     client = None
 
 def motor_masivo_infinito(modulo, entrada):
-    """Motor autónomo con matrices masivas de variación para generar miles de respuestas únicas en cualquier categoría."""
+    """Motor autónomo con generación contextual avanzada para preguntas y ejercicios reales."""
     entrada_lower = entrada.lower()
     
     # 1. Detección automática del área de estudio o temática libre
-    if any(k in entrada_lower for k in ["algebra", "matematica", "ecuacion", "numeros", "calculo", "geometria", "aritmetica"]):
+    if any(k in entrada_lower for k in ["algebra", "matematica", "ecuacion", "numeros", "calculo", "geometria", "aritmetica", "funciones"]):
         area = "Matemáticas y Razonamiento Lógico"
         enfoque = "abstracción formal, modelamiento cuantitativo y rigor analítico"
+        ejemplo_quiz_1 = ("Dada la función $f(x) = 2x + 3$, ¿cuál es el valor de $f(4)$?", ["A) 5", "B) 11 *(Correcta)*", "C) 8", "D) 14"])
+        ejemplo_quiz_2 = ("Al despejar la incógnita en la ecuación lineal $3x - 6 = 12$, el valor de $x$ es:", ["A) 2", "B) 4", "C) 6 *(Correcta)*", "D) 8"])
+        ejemplo_quiz_3 = ("¿Cuál es la representación gráfica principal de una función cuadrática de la forma $ax^2 + bx + c$?", ["A) Una línea recta", "B) Una parábola *(Correcta)*", "C) Una circunferencia", "D) Una hipérbola"])
     elif any(k in entrada_lower for k in ["libro", "novela", "cuento", "literatura", "cortazar", "texto", "poesia", "autor", "narrativa"]):
         area = "Literatura y Hermenéutica Crítica"
         enfoque = "deconstrucción de textos, análisis de tiempos narrativos y contexto estético"
+        ejemplo_quiz_1 = ("¿Qué técnica narrativa caracteriza frecuentemente las obras de Julio Cortázar en cuanto al tiempo?", ["A) Linealidad estricta y cronológica", "B) Ruptura temporal, saltos y exploración de la conciencia *(Correcta)*", "C) Ausencia total de descripciones temporales", "D) Estilo estrictamente periodístico"])
+        ejemplo_quiz_2 = ("En el análisis hermenéutico de un texto literario, ¿qué busca primordialmente el lector crítico?", ["A) Memorizar la fecha de publicación", "B) Interpretar las intenciones estéticas y los subtextos del autor *(Correcta)*", "C) Contar el número exacto de páginas", "D) Ignorar el contexto histórico"])
+        ejemplo_quiz_3 = ("¿Qué elemento define principalmente a una novela frente a un cuento corto?", ["A) La complejidad de su trama, subtramas y desarrollo profundo de personajes *(Correcta)*", "B) La obligatoriedad de tener rima", "C) El uso exclusivo de diálogos", "D) Su extensión menor a dos páginas"])
     elif any(k in entrada_lower for k in ["ciencia", "fisica", "quimica", "biologia", "celula", "ecosistema", "atomos", "energia"]):
         area = "Ciencias Naturales y Experimentación"
         enfoque = "observación empírica, formulación de hipótesis y validación de variables"
-    elif any(k in entrada_lower for k in ["historia", "sociedad", "geografia", "cultura", "politica", "revolucion"]):
-        area = "Ciencias Sociales y Pensamiento Crítico"
-        enfoque = "análisis multicausal, contextualización histórica y debate ciudadano"
+        ejemplo_quiz_1 = ("¿Cuál es la unidad fundamental estructural y funcional de los seres vivos?", ["A) El átomo", "B) La célula *(Correcta)*", "C) La molécula de agua", "D) El tejido adiposo"])
+        ejemplo_quiz_2 = ("En el método científico, ¿qué paso sigue inmediatamente después de formular una hipótesis?", ["A) La experimentación y recolección de datos *(Correcta)*", "B) La publicación del libro de texto", "C) Concluir sin pruebas", "D) Descartar la observación"])
+        ejemplo_quiz_3 = ("¿Qué ley física explica la conservación de la energía en un sistema aislado?", ["A) Primera Ley de la Termodinámica *(Correcta)*", "B) Ley de la gravedad universal", "C) Principio de Arquímedes", "D) Ley de Ohm"])
     else:
         area = "Desarrollo Curricular Multidisciplinario"
         enfoque = f"transferencia de saberes, resolución de problemas y análisis de {entrada}"
+        ejemplo_quiz_1 = (f"¿Cuál es el objetivo principal al abordar la temática de {entrada}?", ["A) Estudiar sus componentes de forma aislada", "B) Comprender su impacto sistémico y aplicación práctica *(Correcta)*", "C) Memorizar datos sin contexto", "D) Descartar su análisis crítico"])
+        ejemplo_quiz_2 = (f"¿Qué metodología resulta más efectiva para trabajar {entrada}?", ["A) Clases pasivas sin interacción", "B) Aprendizaje basado en resolución de desafíos prácticos *(Correcta)*", "C) Lectura monótona sin retroalimentación", "D) Exclusión de la práctica"])
+        ejemplo_quiz_3 = (f"¿Cómo se valida el dominio sobre {entrada}?", ["A) Mediante evaluación formativa y transferencia a escenarios reales *(Correcta)*", "B) Repitiendo conceptos al azar", "C) Evitando toda evaluación", "D) Copiando respuestas"])
 
-    # 2. Bancos masivos de variabilidad (crean miles de combinaciones aleatorias)
     verbos = ["Analizar profundamente", "Deconstruir de forma crítica", "Sistematizar los principios de", "Modelar escenarios sobre", "Evaluar el impacto de"]
     metodologias = ["Aprendizaje Basado en Retos (ABR)", "Aula Invertida (Flipped Classroom)", "Enseñanza por Indagación", "Socioconstructivismo Aplicado"]
     dinamicas = ["Plenario de co-creación guiada", "Células de análisis colaborativo", "Estación de resolución de casos cruzados", "Debate estructurado por roles"]
     evaluaciones = ["Ticket de salida metacognitivo", "Rúbrica de autoevaluación cruzada", "Matriz de síntesis conceptual", "Defensa relámpago de conclusiones"]
 
-    # Selección aleatoria masiva
     v = random.choice(verbos)
     m = random.choice(metodologias)
     d = random.choice(dinamicas)
@@ -92,29 +99,32 @@ def motor_masivo_infinito(modulo, entrada):
 """
 
     else:
-        return f"""### ❓ Banco de Evaluación Formativa ({area})
-**Materia / Contenido:** `{entrada}`
+        q1, opts1 = ejemplo_quiz_1
+        q2, opts2 = ejemplo_quiz_2
+        q3, opts3 = ejemplo_quiz_3
+        return f"""### ❓ Banco de Evaluación Formativa y Quiz Real ({area})
+**Tema de Evaluación:** `{entrada}`
 
-1. Desde el enfoque metodológico de {area}, ¿cuál es la finalidad de estudiar `{entrada}`?
-   * A) Aislar los componentes teóricos sin relación con el entorno
-   * B) Desarrollar competencias avanzadas orientadas a {enfoque} *(Correcta)*
-   * C) Establecer marcos rígidos de memorización temporal
-   * D) Reducir la complejidad analítica del saber
+1. {q1}
+   * {opts1[0]}
+   * {opts1[1]}
+   * {opts1[2]}
+   * {opts1[3]}
 
-2. ¿Qué indicador evidencia un aprendizaje profundo y significativo en esta temática?
-   * A) La reproducción textual de conceptos sin contexto
-   * B) La capacidad de transferir, criticar y aplicar los conocimientos ante escenarios nuevos *(Correcta)*
-   * C) La dependencia absoluta de la guía paso a paso del profesor
-   * D) La omisión de los procesos de validación empírica
+2. {q2}
+   * {opts2[0]}
+   * {opts2[1]}
+   * {opts2[2]}
+   * {opts2[3]}
 
-3. ¿Qué estrategia maximiza el impacto pedagógico de este contenido?
-   * A) Clases magistrales unidireccionales continuas
-   * B) Evaluaciones punitivas sin retroalimentación formativa
-   * C) La aplicación de metodologías activas como {m} *(Correcta)*
-   * D) El estudio estrictamente aislado e individual
+3. {q3}
+   * {opts3[0]}
+   * {opts3[1]}
+   * {opts3[2]}
+   * {opts3[3]}
 
 ---
-* **Clave de Validación Docente:** 1. B | 2. B | 3. C
+* **Clave de Validación Docente:** 1. B | 2. A | 3. B
 """
 
 def generar_respuesta_segura(modulo, prompt_texto):

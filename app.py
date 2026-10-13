@@ -28,6 +28,15 @@ st.sidebar.info("💡 Sistema conectado y listo para la presentación.")
 
 def generar_respuesta_segura(prompt_texto):
     try:
+        response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt_texto)
+        return response.text
+    except Exception as e:
+        if "503" in str(e) or "UNAVAILABLE" in str(e) or "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+            st.warning("⚠️ Límite de la API alcanzado o alta demanda. Por favor, intenta de nuevo en unos momentos.")
+        else:
+            st.error(f"Ocurrió un error inesperado: {e}")
+        return None
+    try:
        response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt_texto)
         return response.text
     except Exception as e:

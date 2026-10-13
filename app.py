@@ -4,8 +4,7 @@ from google import genai
 st.set_page_config(page_title="ClassTrack", layout="wide")
 
 # Configuración del cliente de Gemini
-client = genai.Client()
-
+client = genai.Client(api_key=st.secrets["AQ.Ab8RN6KYYxhTrQRG7VBmWXVfKjiAZDf0CbP2Rug0j1ooJ4bM3A"])
 def generar_respuesta_segura(prompt_texto):
     try:
         response = client.models.generate_content(model='gemini-2.5-flash', contents=prompt_texto)

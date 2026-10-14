@@ -118,6 +118,7 @@ def motor_masivo_chile(modulo, entrada, nivel_curso=""):
             ("¿Qué medida preventiva es fundamental antes de realizar actividad física intensa?", ["A) Consumir bebidas azucaradas en exceso", "B) Realizar un calentamiento muscular y articular adecuado *(Correcta)*", "C) Dormir inmediatamente después", "D) Evitar la hidratación"]),
             ("¿Qué rol cumple la hidratación en el cuerpo humano durante el esfuerzo físico?", ["A) Regula la temperatura corporal y transporta nutrientes *(Correcta)*", "B) Bloquea el metabolismo", "C) Eleva la fatiga muscular", "D) Aumenta la deshidratación"]),
     # (Continuación del bloque anterior de Salud...)
+        ]
     elif any(k in e_low for k in ["quimica", "estequiometria", "mole", "acido", "reaccion", "atomos", "enlace", "biologia", "celula", "ecosistema", "fotosintesis", "fisica"]):
         area = "Ciencias Naturales (Biología, Física y Química - MINEDUC)"
         enfoque = "indagación científica, experimentación, análisis de variables y comprensión del entorno natural"
